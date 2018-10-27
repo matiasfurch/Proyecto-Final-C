@@ -7,7 +7,8 @@
 //
 
 #include <stdio.h>
-// test in
+
+// TEST
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
