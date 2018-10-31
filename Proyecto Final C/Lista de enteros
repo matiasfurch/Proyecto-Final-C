@@ -1,0 +1,79 @@
+typedef struct N{
+int vipd;
+struct N *ps;
+}Nodo;
+typedef struct L{
+Nodo *cur,*curaux,*acc;
+}Lista;
+void init(Lista *a){ //Inicializa la lista
+(*a).acc=NULL;
+(*a).cur=NULL;
+(*a).curaux=NULL;
+}
+int isFull(Lista a){ //Devuelve verdadero si no hay memoria para insertar en la lista
+Nodo *P;
+if(P=(Nodo *)malloc(sizeof(Nodo))==NULL){
+   free(P);
+   return 1;
+   }else{
+       free(P);
+       return 0;
+   }
+}
+int copy(Lista a){ //Devuelve el valor del entero en el que se encuetra el cursor
+return a.cur->vipd;
+}
+int isEmpty(Lista a){ //Devuelve verdad si la lista esta vacia
+if(a.acc==NULL)return 1;
+else return 0;
+}
+int isOos(Lista a){ //Devuelve verdad si el cursos se salio de la lista y apunta a nulo
+if(a.cur==NULL)return 1;
+else return 0;
+}
+void reset(Lista *a){ //Posiciona el cursor auxilar y el cursor en el primer elemento apuntado por el acceso
+(*a).cur=(*a).acc;
+(*a).curaux=(*a).acc;
+}
+void forwards(Lista *a){ //Si el cursor se en uncuentra en la misma posicion que el auxiliar avanza solo el cursor.
+(*a).curaux=(*a).cur; //Si el auxiliar se encuentra un elemento atras, el cursor y el auxiliar avanzan 1 posicion
+(*a).cur=(*a).cur->ps;
+}
+void insert(Lista *a,int x){ // Inserta un entero en la posicion anterior al cursor
+Nodo *P;
+P=(Nodo *)malloc(sizeof(Nodo));
+if((*a).acc==(*a).cur){ // Inserta un entero en caso de que la lista este vacia o en el primer lugar, haciendo apuntar al acceso al nuevo nodo
+    (*a).acc=P;
+    (*P).ps=(*a).cur;
+    (*a).cur=P;
+    (*a).curaux=(*a).acc;
+}else{                        //Inserta un entero entre el cursor y el cursor anterior
+        (*a).curaux->ps=P;
+        (*P).ps=(*a).cur;
+        (*a).cur=P;
+}
+(*P).vipd=x;
+}
+void supress(Lista *a){ //Elimina el nodo indicado por el cursor
+if((*a).acc==(*a).cur){  //cuando el cursor esta en el primer lugar, hace apuntar al nodo al siguiente del cursor (que puede ser nill)
+    (*a).acc=(*a).cur->ps;
+    free((*a).cur);
+    (*a).cur=(*a).acc;
+}else{
+    (*a).curaux->ps=(*a).cur->ps;
+    free((*a).cur);
+    (*a).cur=(*a).curaux->ps;
+}
+}
+void insert_ordenado(Lista *a,int x){  //Inserta un elemento de forma ordenada de menor a mayor
+int i,aux;
+reset(a);
+if(isEmpty((*a))){
+    insert(a,x);
+}else{
+while(!isOos((*a))&&(*a).cur->vipd<=x){
+        forwards(a);
+}
+insert(a,x);
+}
+}
