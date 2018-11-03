@@ -1,16 +1,32 @@
-//
-//  main.c
-//  Proyecto Final C
-//
-//  Created by Gabriel S on 27/10/2018.
-//  Copyright © 2018 Gabriel S. All rights reserved.
-//
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#define LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
-// TEST
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
+typedef enum {false = 0, true = 1} bool;
+
+// CUSTOM TYPES -----------------------------------------------------------
+
+typedef struct {
+    int ID;
+    char *nombre;
+    char *pais;
+    char *deporte;
+    int puntaje;
+    struct {
+        int oro;
+        int plata;
+        int bronce;
+    } medallas;
+    bool estado;
+} Athleta;
+
+// main :: IO ()
+int main(void) {
+    
+    
     return 0;
 }
+
+// GENERIC ----------------------------------------------------------------
