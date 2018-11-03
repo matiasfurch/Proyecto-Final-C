@@ -1,0 +1,112 @@
+typedef struct N{
+int vipd;
+struct N *ps;
+}Nodo;
+typedef struct L{
+Nodo *cur,*curaux,*acc;
+}Lista;
+void init(Lista *a){ //Inicializa la lista
+(*a).acc=NULL;
+(*a).cur=NULL;
+(*a).curaux=NULL;
+}
+int isFull(Lista a){ //Devuelve verdadero si no hay memoria para insertar en la lista
+Nodo *P;
+if(P=(Nodo *)malloc(sizeof(Nodo))==NULL){
+   free(P);
+   return 1;
+   }else{
+       free(P);
+       return 0;
+   }
+}
+int copy(Lista a){ //Devuelve el valor del entero en el que se encuetra el cursor
+return a.cur->vipd;
+}
+int isEmpty(Lista a){  //Devuelve verdad si la lista esta vacia
+if(a.acc==NULL)return 1;
+else return 0;
+}
+int isOos(Lista a){ //Devuelve verdad si el cursos se salio de la lista y apunta a nulo
+if(a.cur==NULL)return 1;
+else return 0;
+}
+void reset(Lista *a){ //Posiciona el cursor auxilar y el cursor en el primer elemento apuntado por el acceso
+(*a).cur=(*a).acc;
+(*a).curaux=(*a).acc;
+}
+void forwards(Lista *a){ //Si el cursor se en uncuentra en la misma posicion que el auxiliar avanza solo el cursor.
+(*a).curaux=(*a).cur;    //Si el auxiliar se encuentra un elemento atras, el cursor y el auxiliar avanzan 1 posicion
+(*a).cur=(*a).cur->ps;
+}
+void insert(Lista *a,int x){  // Inserta un entero segun la situacion de la lista
+Nodo *P;
+P=(Nodo *)malloc(sizeof(Nodo));
+if(((*a).acc==(*a).cur)&&(*a).acc==NULL){ //Cuando la lista no tiene elementos
+    (*a).acc=P;
+    (*P).ps=(*a).cur;
+    (*a).cur=P;
+    (*a).curaux=(*a).acc;
+}else{
+    if(((*a).acc!=NULL)&&((*a).cur)==(*a).acc){ //Cuando la lista tiene un unico elemento (En esta parte tengo un error que tengo que consultar con el profe)
+        (*P).ps=(*a).cur->ps;
+        (*a).curaux=(*a).cur;
+        (*a).cur=P;
+        (*a).curaux->ps=P;
+    }else{
+        if(!((*a).cur==(*a).acc)&&(*a).cur->ps==NULL){  //Cuando el cursor se encuentra en el ultimo elemento
+            (*a).curaux=(*a).cur;
+            (*a).cur->ps=P;
+            (*P).ps=NULL;
+            (*a).cur=P;
+            (*a).curaux->ps=P;
+            }else{ //Cuando el cursor se encuentra entre dos elementos (inserta el entero en el elemento siguiente del cursor)
+                (*a).curaux=(*a).cur;
+                (*P).ps=(*a).cur->ps;
+                (*a).cur=P;
+                    }
+}
+}
+(*P).vipd=x;
+}
+void supress(Lista *a){ //Elimina el nodo en el que se encuentra el cursor liberando memoria
+if(((*a).acc==(*a).cur)&&((*a).cur->ps==NULL)){
+    free((*a).cur);
+    (*a).acc=NULL;
+    (*a).cur=NULL;
+    (*a).curaux=NULL;
+}else{if(((*a).acc==(*a).cur)&&((*a).cur->ps!=NULL)){
+        (*a).acc=(*a).cur->ps;
+        free((*a).cur);
+        (*a).cur=(*a).acc;
+        (*a).curaux=(*a).cur;
+        }else{
+            if((*a).cur->ps!=NULL){
+                (*a).curaux->ps=(*a).cur->ps;
+                free((*a).cur);
+                (*a).cur=(*a).curaux->ps;
+        }else{
+            (*a).curaux->ps=(*a).cur->ps;
+            free((*a).cur);
+            (*a).cur=(*a).curaux;
+            }
+        }
+}
+}
+void insert_ordenado(Lista *a,int x){   //Inserta un entero en su ubicacion de forma ordenada de menor a mayor
+int i,aux;                              //FUnciona siempre que la lista ya tenga por lo menos un elemento cargado
+reset(a);                               // Eso lo tengo que consultar tambien
+if((*a).acc==(*a).cur && (*a).cur->ps==NULL){
+    if((*a).cur->vipd>=x){
+        aux=copy((*a));
+        supress(a);
+        insert(a,x);
+        insert(a,aux);
+    }else insert(a,x);
+}else{
+    while((*a).cur->vipd<=x && (*a).cur->ps!=NULL){
+        forwards(a);
+    }
+    insert(a,x);
+}
+}  //Una vez que todo fucione, solo queda adaptarlo al tipo atleta
