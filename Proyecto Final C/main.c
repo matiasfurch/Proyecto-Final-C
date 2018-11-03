@@ -22,6 +22,7 @@ typedef struct {
     bool estado;
 } Athleta;
 
+
 // main :: IO ()
 int main(void) {
     
