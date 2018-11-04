@@ -12,7 +12,6 @@ typedef struct node_ {
     struct node_ *next;
 } Node;
 
-
 typedef struct {
     /* acceso a la lista */
     Node *acc;

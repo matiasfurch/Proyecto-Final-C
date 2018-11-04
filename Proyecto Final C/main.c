@@ -64,6 +64,5 @@ void modificarEstado(Atleta *a, bool x) {
 // main :: IO ()
 int main(void) {
     
-    
     return 0;
 }
