@@ -20,7 +20,45 @@ typedef struct {
         int bronce;
     } medallas;
     bool estado;
-} Athleta;
+} Atleta;
+
+// FUNCTIONS
+// Fix Falta asignar de forma aleatoria
+void cargarID(Atleta *a, int x) {
+    a->ID = x;
+}
+
+void cargarNombre(Atleta *a, char *x) {
+    a->nombre = x;
+}
+
+void cargarPais(Atleta *a, char *x) {
+    a->pais = x;
+}
+
+void cargarDeporte(Atleta *a, char *x) {
+    a->deporte = x;
+}
+
+void cargarPuntaje(Atleta *a, int x) {
+    a->puntaje = x;
+}
+
+void modificarMedallaDeOro(Atleta *a, int x) {
+    a->medallas.oro = x;
+}
+
+void modificarMedallaDePlata(Atleta *a, int x) {
+    a->medallas.plata = x;
+}
+
+void modificarMedallaDeBronce(Atleta *a, int x) {
+    a->medallas.bronce = x;
+}
+
+void modificarEstado(Atleta *a, bool x) {
+    a->estado = x;
+}
 
 
 // main :: IO ()
@@ -29,5 +67,3 @@ int main(void) {
     
     return 0;
 }
-
-// GENERIC ----------------------------------------------------------------
